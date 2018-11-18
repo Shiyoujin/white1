@@ -13,4 +13,4 @@ public class creature {
             System.out.println("王健开笑，第" + x + "次");
         }
     }
-}
+} //
