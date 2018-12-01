@@ -6,25 +6,30 @@ import java.sql.SQLException;
 
 public class JDBCOperation {
    static class Student {
-        private String Id;
+//        private String Id;   删掉 Id
         private String Name;
         private String Sex;
         private String Age;
 
         Student(String Name, String Sex, String Age) {
-            this.Id = null; //default
+//            this.Id = null; //default  删除Id相关
             this.Name = Name;
             this.Sex = Sex;
             this.Age = Age;
         }
 
-        public String getId() {
-            return Id;
+        public Student (Connection con ){
+
         }
 
-        public void setId(String Id) {
-            this.Id = Id;
-        }
+
+//        public String getId() {
+//            return Id;
+//        }
+//
+//        public void setId(String Id) {
+//            this.Id = Id;
+//        }
 
         public String getName() {
             return Name;
@@ -52,15 +57,15 @@ public class JDBCOperation {
     }
 
     private static  Connection getConn() {
-        String url = "jdbc:mysql://localhost:3306/student";
-        String username = "root";
-        String password = "";
+//        String url = "jdbc:mysql://localhost:3306/student";   直接写localhost也可以
+//        String username = "root";
+//        String password = "";  重复了
         Connection conn = null;
         try {
             String driverName= "com.mysql.cj.jdbc.Driver";
-            conn= DriverManager.getConnection("jdbc:mysql://mysql/student"+"?serverTimezone=GMT%2B8","root","");
             Class.forName(driverName); //classLoader,加载对应驱动
-            conn = (Connection) DriverManager.getConnection(url, username, password);
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/student"+"?serverTimezone=GMT%2B8","root","");
+//            conn = (Connection) DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -149,6 +154,8 @@ public class JDBCOperation {
     }
 
     public static void main(String args[]) {
+         Connection con = JDBCOperation.getConn();
+         Student s = new Student(con);
          JDBCOperation.getAll();
          JDBCOperation.insert(new Student("Achilles","Male","14"));
          JDBCOperation.getAll();
@@ -156,4 +163,4 @@ public class JDBCOperation {
          JDBCOperation.delete("Achilles");
          JDBCOperation.getAll();
     }
-    }//
+    }
